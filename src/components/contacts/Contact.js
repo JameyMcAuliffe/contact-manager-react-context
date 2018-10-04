@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Consumer} from '../context';
+import {Consumer} from '../../context';
 
 class Contact extends Component {
 	state = {
@@ -13,7 +13,7 @@ class Contact extends Component {
 		});
 	}
 
-	onDeleteClick =(id, dispatch) => {
+	onDeleteClick = (id, dispatch) => {
 		dispatch({type: 'DELETE_CONTACT', payload: id})
 	}
 
@@ -30,7 +30,7 @@ class Contact extends Component {
 							<h4>{name} 
 								<i 
 									onClick={this.onShowClick} 
-									className={showContactInfo ? "fas fa-sort-down" : "fas fa-sort-up"}
+									className={showContactInfo ? "fas fa-sort-up" : "fas fa-sort-down"}
 									style={{cursor: "pointer"}}></i>
 								<i 
 									className="fas fa-times" 
