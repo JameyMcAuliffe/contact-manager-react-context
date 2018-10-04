@@ -39,7 +39,10 @@ export class Provider extends Component {
 		],
 		//dispatch is how you access an action in other components
 		dispatch: action => {
-			this.setState(state => reducer(state, action))
+			//this.setState(state => reducer(state, action))
+			this.setState((state) => {
+				return reducer(state, action);
+			});
 		}
 	}
 
