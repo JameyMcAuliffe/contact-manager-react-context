@@ -7,7 +7,8 @@ class AddContact extends Component {
 	state = {
 		name: '',
 		email: '',
-		phone: ''
+		phone: '',
+		errors: {}
 	}
 
 	onChange = e => this.setState({[e.target.name]: e.target.value});
@@ -15,12 +16,26 @@ class AddContact extends Component {
 	onSubmit = (dispatch, e) => {
 		e.preventDefault();
 		const {name, email, phone} = this.state;
+
+		//Check for errors
+		if(name === '') {
+			this.setState({errors: {name: 'Name is required'}});
+			return;
+		} else if (email === '') {
+			this.setState({errors: {email: 'Email is required'}});
+			return;
+		} else if (phone === '') {
+			this.setState({errors: {phone: 'Phone is required'}});
+			return;
+		}
+
 		const newContact = {
 			//uuid generates an id
 			id: uuid(),
 			name, 
 			email, 
-			phone
+			phone,
+			errors: {}
 		};
 
  		dispatch({type: 'ADD_CONTACT', payload: newContact});
@@ -34,7 +49,7 @@ class AddContact extends Component {
 	}
 
 	render() {
-		const {name, email, phone} = this.state;
+		const {name, email, phone, errors} = this.state;
 		return (
 		<Consumer>
 			{value => {
@@ -50,6 +65,7 @@ class AddContact extends Component {
 									value={name}
 									placeholder="Enter a name..."
 									onChange={this.onChange}
+									error={errors.name}
 								/>
 								<TextInputGroup 
 									label="Email"
@@ -58,6 +74,7 @@ class AddContact extends Component {
 									value={email}
 									placeholder="Enter an email..."
 									onChange={this.onChange}
+									error={errors.email}
 								/>
 								<TextInputGroup 
 									label="Phone"
@@ -65,6 +82,7 @@ class AddContact extends Component {
 									value={phone}
 									placeholder="Enter a phone number..."
 									onChange={this.onChange}
+									error={errors.phone}
 								/>
 								<input type="submit" value="Add Contact" className="btn btn-block btn-light"/>
 							</form>
