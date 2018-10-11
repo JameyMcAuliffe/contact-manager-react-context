@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 const Context = React.createContext();
 
@@ -23,24 +24,7 @@ const reducer = (state, action) => {
 export class Provider extends Component {
 	state = {
 		contacts: [
-			{
-				id: 1,
-				name: 'John Doe',
-				email: 'jd@gmail.com',
-				phone: '555-555-5555'
-			},
-			{
-				id: 2,
-				name: 'John Moe',
-				email: 'jm@gmail.com',
-				phone: '455-555-5555'
-			},
-			{
-				id: 3,
-				name: 'John Shwo',
-				email: 'js@gmail.com',
-				phone: '445-555-5555'
-			}
+			
 		],
 		//dispatch is how you access an action in other components
 		dispatch: action => {
@@ -49,6 +33,14 @@ export class Provider extends Component {
 				return reducer(state, action);
 			});
 		}
+	}
+
+	componentDidMount() {
+		axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+			this.setState({
+				contacts: res.data
+			});
+		});
 	}
 
 	render() {
